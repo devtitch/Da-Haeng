@@ -16,12 +16,11 @@
 
 .button:hover {
   transform: translate(0, 6px);
-  box-shadow: 0 var(--border) 0 var(--colorDeep);
+  /* box-shadow: 0 var(--border) 0 var(--colorDeep); */
 }
 
 .sign {
   color: white;
-  font-weight: bold;
   font-size: 28px;
   display: flex;
   align-items: center;

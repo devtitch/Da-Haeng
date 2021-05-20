@@ -1,10 +1,9 @@
 .header {
   /* background-color: yellow; */
   color: black;
-  position: -webkit-sticky;
-  position: sticky;
+  position: absolute;
   z-index: 50;
-  width: 100%;
+  width: 100vw;
   height: 100px;
   top: 0;
   left: 0;
@@ -22,7 +21,7 @@
 .header_left_button {
   z-index: 1;
   cursor: pointer;
-  width: 200px;
+  width: 180px;
   height: 60px;
   background: #ce89c8;
   border: 3px #aa47a2 solid;
@@ -40,9 +39,8 @@
   box-shadow: 0 4px 0 #aa47a2;
 }
 
-.header_left_button_sign {
+.header_left_button_text {
   color: white;
-  font-weight: bold;
   font-size: 28px;
   display: flex;
   align-items: center;
@@ -59,6 +57,34 @@
   padding-right: 20px;
   display: flex;
   justify-content: flex-end;
+}
+
+.header_right_button_login {
+  z-index: 1;
+  cursor: pointer;
+  width: 140px;
+  height: 60px;
+  background: #fb9cbb;
+  border: 3px #f73a78 solid;
+  border-radius: 40px;
+  /* box-shadow: 0 10px 0 darken(#ce89c8, 20%); */
+  box-shadow: 0 10px 0 #f73a78;
+  transition: all 100ms; /* easeInOutExpo */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.header_right_button_login:hover {
+  transform: translate(0, 6px);
+  box-shadow: 0 4px 0 #f73a78;
+}
+
+.header_right_button_login_text {
+  color: white;
+  font-size: 28px;
+  display: flex;
+  align-items: center;
 }
 
 .header_right_item {
@@ -102,7 +128,7 @@
   position: absolute;
   right: 0;
   background-color: #f9f9f9;
-  min-width: 180px;
+  min-width: 170px;
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   z-index: 1;
   border-radius: 10px;

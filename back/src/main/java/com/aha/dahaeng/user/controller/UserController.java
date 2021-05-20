@@ -1,15 +1,14 @@
 package com.aha.dahaeng.user.controller;
 
 
-import com.aha.dahaeng.common.annotation.CurrentUser;
-import com.aha.dahaeng.user.domain.User;
+import com.aha.dahaeng.common.annotation.CurrentLoginId;
 import com.aha.dahaeng.user.dto.request.SignUpRequest;
-import com.aha.dahaeng.user.dto.response.AdminResponse;
 import com.aha.dahaeng.user.dto.response.UserResponse;
 import com.aha.dahaeng.user.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,25 +34,27 @@ public class UserController {
 
     private final UserService userService;
 
-    @ApiOperation(value = "회원 가입")
-    @ApiResponse(code = 201, message = "created")
+    @ApiOperation(value = "회원 가입", notes = "role \n 선생님 : 'ROLE_ADMIN' \n 학생 : 'ROLE_STUDENT' ")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "회원 가입 성공"),
+            @ApiResponse(code = 409, message = "중복된 아이디" )
+    })
     @PostMapping("")
     public ResponseEntity<String> signUp(final @Valid @RequestBody SignUpRequest signUpRequest){
-        userService.createUser(signUpRequest);
+        Long userId = userService.createUser(signUpRequest);
+
+        if(userId==-1L){ //아이디 중복 체크
+            return new ResponseEntity<>("Duplicate Id", HttpStatus.CONFLICT);
+        }
+
         return new ResponseEntity<>("Created", HttpStatus.CREATED);
     }
 
     @ApiOperation(value = "사용자 정보 조회")
     @GetMapping("")
-    public ResponseEntity<UserResponse> getUserInfo(@ApiIgnore @CurrentUser User user){
-        UserResponse userResponse = userService.getUserInfo(user);
+    public ResponseEntity<UserResponse> getUserInfo(@ApiIgnore @CurrentLoginId String loginId){
+        UserResponse userResponse = userService.getUserInfo(loginId);
         return new ResponseEntity<>(userResponse, HttpStatus.OK);
     }
-
-//    @ApiOperation(value = "마이페이지 (선생님)")
-//    @GetMapping("/admin/{loginId}")
-//    public ResponseEntity<AdminResponse> getAdminInfo(@PathVariable String loginId){
-//        return null;
-//    }
 
 }

@@ -7,10 +7,14 @@ import { useHistory, generatePath } from 'react-router';
 export default function CardComp({ type }) {
   const history = useHistory();
 
-  // TODO 로그인 여부 확인해서 isLogined 바꾸기
-  const [isLogined, setIsLogined] = useState(true);
-  // TODO uid 진짜로 받아오기
-  const [uid, setUid] = useState(5);
+  // 로그인 여부 확인
+  const [isLogined, setIsLogined] = useState(sessionStorage.getItem('jwt'));
+
+  useEffect(() => {
+    if (sessionStorage.getItem('jwt')) {
+      setIsLogined(sessionStorage.getItem('jwt'));
+    }
+  }, [sessionStorage.getItem('jwt')]);
 
   const [title, setTitle] = useState('');
   const [contents, setContents] = useState('');
@@ -49,7 +53,7 @@ export default function CardComp({ type }) {
       color: '#F38375',
       colorDeep: '#E56D5D',
       lockable: true,
-      path: RouterInfo.PAGE_URLS.PRACTICE,
+      path: RouterInfo.PAGE_URLS.STAGES,
       category: 'burger',
     },
     bus_tutorial: {
@@ -79,7 +83,7 @@ export default function CardComp({ type }) {
       color: '#F38375',
       colorDeep: '#E56D5D',
       lockable: true,
-      path: RouterInfo.PAGE_URLS.PRACTICE,
+      path: RouterInfo.PAGE_URLS.STAGES,
       category: 'bus',
     },
   };
@@ -115,10 +119,7 @@ export default function CardComp({ type }) {
           className={styles.cover_open}
           onClick={() => {
             history.push({
-              pathname: generatePath(path, {
-                category: category,
-                uid: uid,
-              }),
+              pathname: path,
               state: { category: category },
             });
           }}
