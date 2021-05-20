@@ -5,15 +5,21 @@ import StepComp from 'src/components/StepComp/StepComp';
 import Header from 'src/components/Header/Header';
 import ButtonComp from 'src/components/ButtonComp/ButtonComp';
 import ProgressComp from 'src/components/ProgressComp/ProgressComp';
+import BackgroundComp from 'src/components/BackgroundComp/BackgroundComp';
 import RouterInfo from 'src/constants/RouterInfo';
 import { useHistory, generatePath } from 'react-router';
 
 export default function Test3() {
   const history = useHistory();
 
+  const burgerStageResult = 3;
+  const busStageResult = 1;
+  const name = '박건후';
+
   return (
     <div>
       <Header />
+      <BackgroundComp color="blue" />
       <CardComp type="burger_tutorial" />
       <CardComp type="burger_exercise" />
       <CardComp type="burger_practice" />
@@ -44,11 +50,12 @@ export default function Test3() {
         colorDeep="#f73a78"
       />
 
-      <ProfileComp role="ROLE_ADMIN" />
-      <ProfileComp role="ROLE_STUDENT" />
+      <ProfileComp role="ROLE_ADMIN" name={name} />
+      <ProfileComp role="ROLE_STUDENT" name={name} />
 
-      <ProgressComp percent="30" />
-      <StepComp />
+      <ProgressComp percent="33" />
+      <StepComp type="burger" max={burgerStageResult} />
+      <StepComp type="bus" max={busStageResult} />
     </div>
   );
 }
